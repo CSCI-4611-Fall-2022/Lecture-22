@@ -1,4 +1,4 @@
-# Lecture 21: Shader Programming (Part 2)
+# Lecture 22: Shader Programming (Part 2)
 
 Detailed explanation of this code can be found in the lecture video (will be added after class).
 
