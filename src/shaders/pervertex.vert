@@ -85,7 +85,15 @@ void main()
         illumination += kAmbient * ambientIntensities[i];
 
         // Compute the L vector in the lighting equation
-        vec3 l = normalize(lightPositions[i]);
+        vec3 l;
+        if(lightTypes[i] == DIRECTIONAL_LIGHT)
+        {
+            l = normalize(lightPositions[i]);
+        } 
+        else
+        {
+            l = normalize(lightPositions[i] - worldPosition);
+        }
 
         // Compute the value of N dot L.  The max function clamps the value above zero.
         // This is necessary because any lights with a dot product of zero will be behind
