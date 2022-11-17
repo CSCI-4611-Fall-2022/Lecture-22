@@ -22,6 +22,9 @@ uniform vec3 kAmbient;
 uniform vec3 kDiffuse;
 uniform vec3 kSpecular;
 
+uniform float shininess;
+uniform vec3 eyePosition;
+
 // Information about the lights in the scene are passed to the shader in an array.
 // The light intensities are the Is in the lighting equation.
 const int MAX_LIGHTS = 8;
@@ -104,6 +107,14 @@ void main()
 
         // Compute the diffuse component: Kd * Id * (N dot L)
         illumination += ndotl * kDiffuse * diffuseIntensities[i];
+
+        vec3 e = normalize(eyePosition - worldPosition);
+
+        vec3 r = reflect(l, worldNormal);
+
+        float edotr = max(dot(e, -r), 0.0);
+
+        illumination += pow(edotr, shininess) * kSpecular * specularIntensities[i];
     }
 
     // Because the vertex color and texture coordinates are computed for each pixel,
