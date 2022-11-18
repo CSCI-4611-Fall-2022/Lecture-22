@@ -8,7 +8,7 @@ precision mediump float;
  * License: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
  */ 
 
-// The shader will be identical to the Gouraud shader in GopherGfx.
+// The shader will be identical to the Phong shader in GopherGfx.
 
 // The uniforms are variables passed in to the shader each frame by the CPU program.
 // These are the four matrices needed to convert between coordinate spaces.
@@ -30,7 +30,7 @@ out vec3 worldNormal;
 out vec4 vertColor;
 out vec2 uv;
 
-void main()
+void main() 
 {
     // This line of code computes the vertex position in world coordinates.
     // We will need it to compute the L vector in the lighting equation.
@@ -47,11 +47,7 @@ void main()
     // coordinates as (X,Y,Z,0). We then use "swizzling" to extract just
     // the XYZ components of the final vector.
     worldNormal = (normalMatrix * vec4(normal, 0)).xyz;
-
-    // Make sure to normalize any normals before using them in the lighting
-    // equation.  Otherwise, the illumination may have an incorrect scale factor.
-    worldNormal = normalize(worldNormal);
-
+    
     // Because the vertex color and texture coordinates are computed for each pixel,
     // we need to pass them along to the fragment shader.
     uv = texCoord;
@@ -60,7 +56,7 @@ void main()
     // The vertex shader must always output the 2D position of the vertex in screen
     // coordinates using a special variable called gl_Position. We have already 
     // computed the vertex in world space, so this line of code needs to transform
-    // it to eye space and then screen space. Because worldPosition is a vec3, we have 
+    // it to eye space and then screen space. Because vertPosition is a vec3, we have 
     // to convert to a vec4 in homogeneous coordinates before matrix multiplication.
     gl_Position = projectionMatrix * viewMatrix * vec4(worldPosition, 1);
 }
